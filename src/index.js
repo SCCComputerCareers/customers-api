@@ -21,7 +21,7 @@ const database = process.env.DATABASE;
 const connStr = `mongodb+srv://${username}:${password}@${server}/${database}?retryWrites=true&w=majority`;
 
 var mongoose = require('mongoose');
-mongoose.connect(connStr, {useNewUrlParser: true});
+mongoose.connect(connStr, {useNewUrlParser: true, useUnifiedTopology: true});
 
 app.use((req, res, next) => {
     console.log(`${new Date().toString()} ===> ${req.originalUrl}`);
