@@ -30,6 +30,7 @@ exports.showCust = function(req, res) {
             res.json(doc);
         })
         .catch((err) => {
+            console.log("Error finding customer - 500:", err);
             res.status(500).json(err);
         });
 }
