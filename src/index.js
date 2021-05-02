@@ -11,16 +11,30 @@ var customerRoute = require('./routes/customer');
 var orderRoute = require('./routes/order');
 
 // DB
-console.log(process.env.MONGO_URI)
+console.log(process.env.MONGO_URI);
+const username = process.env.USERNAME;
+const password = process.env.PASSWORD;
+const server = process.env.SERVER;
+const database = process.env.DATABASE;
+
+// const connStr = `mongodb://${server}/${database}`;
+const connStr = `mongodb+srv://${username}:${password}@${server}/${database}?retryWrites=true&w=majority`;
+
 var mongoose = require('mongoose');
-mongoose.connect(process.env.MONGO_URI, {useNewUrlParser: true});
+mongoose.connect(connStr, {useNewUrlParser: true});
 
 app.use((req, res, next) => {
     console.log(`${new Date().toString()} ===> ${req.originalUrl}`);
     next();
 });
 
-app.use(bodyParser.json());
+app.use(express.urlencoded({
+    extended: true
+}
+));
+
+app.use(express.json());
+
 app.use(express.static('public'));
 
 app.use('/test', personRoute);
